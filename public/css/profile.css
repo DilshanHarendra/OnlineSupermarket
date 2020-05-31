@@ -1,0 +1,70 @@
+@charset "utf-8";
+/* CSS Document */
+table {
+
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+.rpass{
+    margin-top: 50px;
+    width: 100%;
+    height: auto;
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 5px;
+    display: none;
+}
+.input{
+    width: 100%;
+    border-radius: 5px;
+}
+.passButton{
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.passButton:hover{
+    background-color: gray;
+
+}
+.updateProf{
+    margin-top: 50px;
+    width: 100%;
+    height: auto;
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 5px;
+    display: none;
+}
+.settings{
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 5px;
+
+}
+.details{
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    border: 2px solid black;
+    margin-left: 0%;
+    padding: 20px;
+}
+.btn-primary{
+    width: 100%;
+}
