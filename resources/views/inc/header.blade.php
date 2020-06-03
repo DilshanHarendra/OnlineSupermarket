@@ -16,6 +16,7 @@
 
 
 
+
 <link rel="stylesheet" href="/css/ionicons.min.css">
 
 <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
@@ -45,6 +46,9 @@
         width: 50px;
         height: 50px;
         border-radius: 30px;
+    }
+    .navbar{
+        border-bottom: 1px solid rgba(0,0,0,0.1);
     }
 </style>
 

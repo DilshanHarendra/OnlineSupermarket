@@ -100,9 +100,31 @@
 
 <body class="goto-here">
 @include('inc/header')
+
 <br><br>
 <div class="container-fluid">
+    @if($errors->any())
+        @if($errors->first()=="Successfully Updated")
+            <div class="alert alert-info" >
+                <h5 style="text-align: center">
+                 {{$errors->first()}}
+
+                </h5>
+            </div>
+        @else
+            <div class="alert alert-danger" >
+                <h5 style="text-align: center">
+                    @foreach($errors->all() as $err)
+                  <?php echo  $err.'<br>'; ?>
+                    @endforeach
+                </h5>
+            </div>
+        @endif
+    @endif
+
+
     <div class="row">
+
         <div class="col-md-4">
             <div class="card">
 
@@ -298,24 +320,25 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form class="needs-validation" novalidate>
+                        <form action="{{action('UserController@updateProfile')}}" method="post" class="needs-validation" novalidate>
+                            {{csrf_field()}}
                             <lable>Full Name</lable><br>
-                            <input type="text"  class="form-control" name="fullname" id="fullname" maxlength="100" value="" required>
+                            <input type="text"  class="form-control" name="fullname" id="fullname" maxlength="100" value="{{$data->fullName}}" required>
                             <div class="invalid-feedback">
                                 Enter Full Name.
                             </div><br>
                             <lable>Address</lable><br>
-                            <input type="text" class="form-control"  name="address" id="address" maxlength="100" value="" required>
+                            <input type="text" class="form-control"  name="address" id="address" maxlength="100" value="{{$data->address}}" required>
                             <div class="invalid-feedback">
                                 Enter Address.
                             </div><br>
                             <lable>Telephone</lable><br>
-                            <input type="tel" class="form-control"  name="telephone" id="telephone" maxlength="50" value="" required>
+                            <input type="tel" class="form-control"  name="telephone" id="telephone" maxlength="50" value="{{$data->telephone}}" required>
                             <div class="invalid-feedback">
                                 Enter Telephone.
                             </div><br>
                             <lable>Email</lable><br>
-                            <input type="email" class="form-control"  name="mail" id="mail" maxlength="50" value="" required>
+                            <input type="email" class="form-control"  name="mail" id="mail" maxlength="50" value="{{$data->email}}" required>
                             <div class="invalid-feedback">
                                 Enter Email.
                             </div><br>
@@ -349,19 +372,21 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="profile.php" onSubmit="return submitPassword()" method="post" class="needs-validation" novalidate>
+                                    <div class="alert alert-danger" id="mess" style="display: none"></div>
+                                    <form action="{{action('UserController@updatePassword')}}" onSubmit="return submitPassword()" method="post" class="needs-validation" novalidate>
+                                        {{csrf_field()}}
                                         <lable>Enter Current Password</lable><br>
-                                        <input class="form-control" name="cpass" id="cpass"  type="password">
+                                        <input class="form-control" name="cpass" id="cpass"  type="password" required>
                                         <div class="invalid-feedback">
                                             Enter Current Password.
                                         </div><br>
                                         <lable>Enter New Password</lable><br>
-                                        <input class="form-control" type="password" name="npass1" id="npass1">
+                                        <input class="form-control" type="password" name="npass1" id="npass1" required>
                                         <div class="invalid-feedback">
                                             Enter New Password.
                                         </div><br>
                                         <lable>Re-Enter New Password</lable><br>
-                                        <input class="form-control" type="password" name="npass2" id="npass2">
+                                        <input class="form-control" type="password" name="npass2" id="npass2" required>
                                         <div class="invalid-feedback">
                                             Re-Enter New Password.
                                         </div><br>
@@ -428,15 +453,32 @@
 
     });
 
+
     function submitPassword() {
-        if(document.getElementById('npass1').value!=document.getElementById('npass2').value){
-            alert("new password does not match");
-            return false;
+        var getCpass=document.getElementById('cpass').value;
+        var getNewpass=document.getElementById('npass1').value;
+        var block=document.getElementById('mess');
+        if (getCpass!=""&&getNewpass){
+             if(getNewpass!=document.getElementById('npass2').value){
+                block.style.display="block";
+                block.innerHTML="new passwords does not match";
+                 return false;
+            }else if(getCpass==getNewpass){
+                block.style.display="block";
+                block.innerHTML="Current password eqals to new Password";
+                 return false;
+            }
+        }
+
     }
-    }
 
 
+function hideblock(x) {
+        setTimeout(()=>{
+            document.getElementById(x).style.display="none";
+        },5000);
 
+}
 
 </script>
 

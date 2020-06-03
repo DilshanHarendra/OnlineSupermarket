@@ -44,8 +44,11 @@ Route::get('/addtoCart/{id}','ProductsController@addTocart');
 Route::get('/showProduct/{id}','ProductsController@showOneProduct');
 Route::get('/shop','ProductsController@showAllProduct');
 
+
 Route::get('/profile/{id}','UserController@getprofile');
 Route::post('/updatepicture','UserController@updatePicture');
+Route::post('/updateprofile','UserController@updateProfile');
+Route::post('/updatepassword','UserController@updatePassword');
 
 
 
