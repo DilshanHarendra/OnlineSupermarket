@@ -18,7 +18,7 @@ unset($imgNames[count($imgNames)-1]);
 
 $imgJson="";
 for ($i=0;$i<count($imgNames);$i++){
-    $imgJson .="{source:'/uploads/$imgNames[$i]'},";
+    $imgJson .="{source:'/uploads/Products/$imgNames[$i]'},";
 }
 
 

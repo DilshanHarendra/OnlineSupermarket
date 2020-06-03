@@ -60,7 +60,7 @@
 
                     <div class="col-md-6 col-lg-3 ">
                         <div class="product">
-                            <a href="showProduct/{{$product->id}}" class="img-prod"><img class="img-fluid" src="/uploads/{{$imgNames[0]}}" alt="Colorlib Template">
+                            <a href="showProduct/{{$product->id}}" class="img-prod"><img class="img-fluid" src="/uploads/Products/{{$imgNames[0]}}" alt="Colorlib Template">
                                 @if($product->discount!=0)
                                 <span class="status">{{$product->discount}}%</span>
                                 @endif

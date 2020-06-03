@@ -7,26 +7,26 @@
 <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-<link rel="stylesheet" href="css/animate.css">
+<link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="/css/animate.css">
 
-<link rel="stylesheet" href="css/owl.carousel.min.css">
-<link rel="stylesheet" href="css/owl.theme.default.min.css">
-<link rel="stylesheet" href="css/magnific-popup.css">
-
-
-
-<link rel="stylesheet" href="css/ionicons.min.css">
-
-<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="css/jquery.timepicker.css">
+<link rel="stylesheet" href="/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/css/magnific-popup.css">
 
 
-<link rel="stylesheet" href="css/flaticon.css">
-<link rel="stylesheet" href="css/icomoon.css">
-<link rel="stylesheet" href="css/style.css">
-<script src="js/main2.js"></script>
-<script src="js/main.js"></script>
+
+<link rel="stylesheet" href="/css/ionicons.min.css">
+
+<link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="/css/jquery.timepicker.css">
+
+
+<link rel="stylesheet" href="/css/flaticon.css">
+<link rel="stylesheet" href="/css/icomoon.css">
+<link rel="stylesheet" href="/css/style.css">
+
+
 <style>
     .nav-link{
         font-size: 15px !important;
@@ -41,12 +41,17 @@
         width: 100%;
         height: 350px;
     }
+    .profileImg{
+        width: 50px;
+        height: 50px;
+        border-radius: 30px;
+    }
 </style>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="index.html">Vegefoods</a>
+        <a class="navbar-brand" href="/home">Vegefoods</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
         </button>
@@ -85,7 +90,9 @@
                     <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->fullName }} <span class="caret"></span>
+                            <img class="profileImg" src="/uploads/ProfilePicture/{{Auth::user()->profilePicture}}" alt="">
+
+                            <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -106,6 +113,10 @@
         </div>
     </div>
 </nav>
+
+
+
+
 <script>
     var links = document.getElementsByClassName('nav-link');
 

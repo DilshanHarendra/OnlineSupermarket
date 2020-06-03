@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id','fullName','address','telephone', 'email', 'password','username'
+        'id','fullName','address','telephone','type','profilePicture', 'email', 'password','username'
     ];
 
     /**
@@ -35,8 +36,27 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'id'=>'varchar'
+
     ];
 
+    public static function getuser($id){
+        if ($id=="all"){
+            $result=DB::table('users')->get();
+        }else{
+            $result=DB::table('users')->where('id',$id)->first();
+        }
 
+        return $result;
+    }
+
+    public static function updateUser($id,$data){
+        DB::table('users')->where('id',$id)->update($data);
+    }
+    public static function updatePicture($id,$data){
+        DB::table('users')->where('id',$id)->update($data);
+    }
+
+    public static function deleteUser($id){
+        DB::table('users')->where('id','=',$id)->delete();
+    }
 }

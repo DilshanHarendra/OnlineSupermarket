@@ -45,7 +45,7 @@ Route::get('/showProduct/{id}','ProductsController@showOneProduct');
 Route::get('/shop','ProductsController@showAllProduct');
 
 Route::get('/profile/{id}','UserController@getprofile');
-
+Route::post('/updatepicture','UserController@updatePicture');
 
 
 
@@ -56,4 +56,4 @@ Route::get('/profile/{id}','UserController@getprofile');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'ProductsController@getLatestProduct');
