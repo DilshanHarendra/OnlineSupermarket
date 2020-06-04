@@ -15,133 +15,104 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 ">
-                <div class="cart-list">
-                    <table class="table">
-                        <thead class="thead-primary">
-                        <tr class="text-center">
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>Product name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                        </tr>
-                        </thead>
-                        <tbody>
 
 
-                        <tr class="text-center">
-                            <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+                        <?php if(Session::has('cart')){
+                            $cart = new \App\Cart(Session::get('cart'));
+                            if ($cart->totalQty!=0){
+                                ?>
+                            <div class="cart-list">
+                                <table class="table">
+                                    <thead class="thead-primary">
+                                    <tr class="text-center">
+                                        <th>&nbsp;</th>
+                                        <th>&nbsp;</th>
+                                        <th>Product name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                <?php
+                            foreach($cart->items as $item){
+                            $imgNames =explode("~", $item['item']->images);
+                            ?>
 
-                            <td class="image-prod"><div class="img" style="background-image:url(images/product-3.jpg);"></div></td>
+                            <tr class="text-center">
+                                <td class="product-remove"><a href="/removeFromCart/{{$item['item']->id}}"><span class="ion-ios-close"></span></a></td>
 
-                            <td class="product-name">
-                                <h3>Bell Pepper</h3>
-                                <p>Far far away, behind the word mountains, far from the countries</p>
-                            </td>
+                                <td class="image-prod"><a href="showProduct/{{$item['item']->id}}"> <div class="img" style="background-image:url('/uploads/Products/{{$imgNames[0]}}');"></div></a></td>
 
-                            <td class="price">$4.90</td>
+                                <td class="product-name">
+                                    <a href="showProduct/{{$item['item']->id}}"> <h3>{{$item['item']->title}}</h3>
+                                        <p>{{$item['item']->discription}}</p>
+                                    </a>
+                                </td>
 
-                            <td class="quantity">
-                                <div class="input-group mb-3">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                </div>
-                            </td>
+                                <td class="price">LKR {{$item['item']->price}}</td>
 
-                            <td class="total">$4.90</td>
-                        </tr><!-- END TR-->
+                                <td class="quantity">
+                                    <div class="input-group mb-3">
+                                        <input type="number" style="width: 20px!important;height: 40px!important;" class="form-control" min="0" max="{{$item['item']->restqty/1}}" value="{{$item['qty']}}">
+                                            &nbsp;Kg &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    {{$item['item']->discount}}%
 
-
-
-                        <tr class="text-center">
-                            <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                            <td class="image-prod"><div class="img" style="background-image:url(images/product-4.jpg);"></div></td>
-
-                            <td class="product-name">
-                                <h3>Bell Pepper</h3>
-                                <p>Far far away, behind the word mountains, far from the countries</p>
-                            </td>
-
-                            <td class="price">$15.70</td>
-
-                            <td class="quantity">
-                                <div class="input-group mb-3">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                </div>
-                            </td>
-
-                            <td class="total">$15.70</td>
-                        </tr><!-- END TR-->
+                                </td>
+                                <td class="total">LKR {{$item['price']}}</td>
+                            </tr>
 
 
-
-
-
-                        </tbody>
-                    </table>
-                </div>
+                        <?php } ?>
+                                </tbody>
+                            </table>
+                            </div>
             </div>
         </div>
-        <div class="row justify-content-end">
-            <div class="col-lg-4 mt-5 cart-wrap ">
-                <div class="cart-total mb-3">
-                    <h3>Coupon Code</h3>
-                    <p>Enter your coupon code if you have one</p>
-                    <form action="#" class="info">
-                        <div class="form-group">
-                            <label for="">Coupon code</label>
-                            <input type="text" class="form-control text-left px-3" placeholder="">
-                        </div>
-                    </form>
-                </div>
-                <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
-            </div>
-            <div class="col-lg-4 mt-5 cart-wrap ">
-                <div class="cart-total mb-3">
-                    <h3>Estimate shipping and tax</h3>
-                    <p>Enter your destination to get a shipping estimate</p>
-                    <form action="#" class="info">
-                        <div class="form-group">
-                            <label for="">Country</label>
-                            <input type="text" class="form-control text-left px-3" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="country">State/Province</label>
-                            <input type="text" class="form-control text-left px-3" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="country">Zip/Postal Code</label>
-                            <input type="text" class="form-control text-left px-3" placeholder="">
-                        </div>
-                    </form>
-                </div>
-                <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Estimate</a></p>
-            </div>
+                            <div class="row justify-content-end">
+
             <div class="col-lg-4 mt-5 cart-wrap ">
                 <div class="cart-total mb-3">
                     <h3>Cart Totals</h3>
-                    <p class="d-flex">
-                        <span>Subtotal</span>
-                        <span>$20.60</span>
-                    </p>
-                    <p class="d-flex">
-                        <span>Delivery</span>
-                        <span>$0.00</span>
-                    </p>
-                    <p class="d-flex">
-                        <span>Discount</span>
-                        <span>$3.00</span>
-                    </p>
+
                     <hr>
                     <p class="d-flex total-price">
                         <span>Total</span>
-                        <span>$17.60</span>
-                    </p>
-                </div>
-                <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
-            </div>
-        </div>
+                        <span>LKR {{$cart->totalPrice}}</span>
+        </p>
+    </div>
+    <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+    </div>
+    </div>
+
+    <?php
+                        }else{
+                            echo "<h1>Empty...</h1>";
+                        }
+                        }else{
+                           echo "<h1>Empty...</h1>";
+                        }
+                        ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 </section>
 

@@ -37,11 +37,13 @@ Route::post('updateProduct','ProductsController@updateProduct');
 
 Route::get('/cart','ProductsController@showcart');
 Route::get('/addtoCart/{id}','ProductsController@addTocart');
-
+Route::get('/removeFromCart/{id}','ProductsController@removeFromcart');
 
 
 
 Route::get('/showProduct/{id}','ProductsController@showOneProduct');
+Route::post('/actionProduct/{id}','ProductsController@actionProduct');
+
 Route::get('/shop','ProductsController@showAllProduct');
 
 

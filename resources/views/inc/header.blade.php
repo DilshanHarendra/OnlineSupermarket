@@ -69,7 +69,16 @@
                 <li class="nav-item"><a href="/aboutus" id="aboutus" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="/admindahsboard" class="nav-link">Admin Dashboard</a></li>
                 <li class="nav-item"><a href="/contactus" id="contactus" class="nav-link">Contact</a></li>
-                <li class="nav-item"><a href="/cart" id="cart" class="nav-link">Cart</a></li>
+                <li class="nav-item"><a href="/cart" id="cart" class="nav-link">Cart
+                        <?php if(Session::has('cart')){
+                            $cart = new \App\Cart(Session::get('cart'));
+                            echo " [".$cart->totalPrice."]";
+                        }else
+                        {
+                            echo " [0]";
+                        }
+                        ?>
+                        </a></li>
 
 
 

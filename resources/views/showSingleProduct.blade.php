@@ -22,7 +22,10 @@
 @include('inc/header')
 
 
+<?php
+$imgNames =explode("~", $product->images);
 
+?>
 
 
 
@@ -34,7 +37,7 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-12"> {{$product->category}}</div>
+
     </div>
 </div>
 <div class="container">
@@ -43,8 +46,15 @@
 
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner border" >
-                    <div class="carousel-item active"> <img class="d-block w-100" src="/images/product-1.jpg" alt="First slide"> </div>
-                    <div class="carousel-item"> <img class="d-block w-100" src="/images/product-2.jpg" alt="Second slide"> </div>
+                    @for($i=0;$i<count($imgNames )-1;$i++)
+                        @if($i==0)
+                            <div class="carousel-item active"> <img class="d-block w-100" src="/uploads/Products/{{$imgNames[$i]}}"> </div>
+                        @else
+                            <div class="carousel-item"> <img class="d-block w-100" src="/uploads/Products/{{$imgNames[$i]}}"> </div>
+                        @endif
+
+
+                    @endfor
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                     <button class="btn btn-dark">< </button>
@@ -72,17 +82,21 @@
             </div>
             <div class="row">
                 <h2>{{$product->title}}</h2>
+
+            </div>
+            <div class="row">
+                <p>Category : {{$category[$product->category]}}</p>
             </div>
             <div class="row">
                 @if($product->discount==0)
-                    <h1><i aria-hidden="true">LKR</i> {{$product->price}}</h1>
+                    <h4><i aria-hidden="true">LKR</i> {{$product->price}}</h4>
 
                 @else
-                    <h1><i aria-hidden="true">LKR</i> {{$product->price-(($product->price*$product->discount)/100)}}</h1>
+                    <h4><i aria-hidden="true">LKR</i> {{$product->price-(($product->price*$product->discount)/100)}}</h4>
                     &nbsp; &nbsp;
-                    <h3><del>{{$product->price}}</del></h3>
+                    <h4><del>{{$product->price}}</del></h4>
                     &nbsp; &nbsp;
-                    <h2 class="text-success">{{$product->discount}}% off</h2>
+                    <h3 class="text-success">{{$product->discount}}% off</h3>
                 @endif
 
             </div>
@@ -95,12 +109,20 @@
 
                 <p style="font-size: 20px"> &nbsp; Fast Delevery | &nbsp; <span class="text-success">FREE</span> </p>
             </div>
+            <form action="/actionProduct/{{$product->id}}" method="post"  >
             <div class="d-flex justify-content-lg-start">
                 <h4>Quantity : &nbsp; &nbsp;</h4>
-                <input type="number" style="width: 100px" class="form-control">
+
+                {{csrf_field()}}
+                        <input type="number" name="qty" style="width: 100px" class="form-control" min="0" max="{{$product->restqty/1}}" value="" required>
+                        <h4>&nbsp;&nbsp;Kg &nbsp;</h4>
 
             </div>
-            <button class="btn btn-primary">Buy Now</button>
+                <br>
+                <button class="btn btn-primary" name="action" value="Buy">Buy Now</button>
+                <button class="btn btn-warning"  name="action" value="acart">Add to cart</button>
+            </form>
+
 
 
 

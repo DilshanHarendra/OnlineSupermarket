@@ -7,6 +7,9 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Session;
+use Symfony\Component\Console\Input\InputArgument;
+
 
 class ProductsController extends Controller
 {
@@ -28,7 +31,7 @@ class ProductsController extends Controller
     public function showOneProduct($id){
         $product=Product::getProductByid($id);
 
-        return view('showSingleProduct',['product'=>$product]);
+        return view('showSingleProduct',['product'=>$product,'category'=>$this->category]);
 
     }
 
@@ -61,7 +64,7 @@ class ProductsController extends Controller
             $x=$request->input('id')-1;
 
             $product=Product::getProductByCategory($x,$pg);
-            return view('products',['products'=>$product[0],'category'=>$this->category,'limit'=>$product[2]])->with('count',$product[1]);
+            return view('products',['products'=>$product[0],'category'=>$this->category,'limit'=>$product[2],'count'=>$product[1]]);
         }else{
             return redirect('home');
         }
@@ -114,28 +117,65 @@ class ProductsController extends Controller
 
     public function showcart(){
 
-        return view('cart');
+        return view("cart");
     }
 
 
     public function addTocart(Request $request,$id){
+       // $request->session()->forget('cart');
+      //  $request->session()->flush();
+        $this->addNewToCart($request,$id,1);
 
 
+       // dd($request->session()->get('cart'));
+        return  redirect("/cart");
+    }
+
+    private  function addNewToCart($request,$id,$qty){
         $item=Product::getProductByid($id);
-        if(Session()->has('cart')) {
-            $oldcart = $request->session()->get('cart');
+
+        if($request->session()->has('cart')) {
+            $oldcart = $request->session()->get('cart');;
         }else{
             $oldcart=null;
         }
 
         $cart= new Cart($oldcart);
 
-        $cart->addItem($item,$id);
-
-        $request->session(['cart'=>$cart]);
-        dd($request->session()->get('cart'));
-        // return Redirect::to("/cart");
+        $cart->addItem($item,$id,$qty);
+        $request->session()->put('cart',$cart);
+        $request->session()->save();
     }
+
+
+    public function  removeFromcart(Request $request, $id){
+        if($request->session()->has('cart')) {
+            $oldcart = $request->session()->get('cart');;
+        }else{
+            $oldcart=null;
+        }
+        $cart= new Cart($oldcart);
+
+        $cart->removeItem($id);
+        $request->session()->put('cart',$cart);
+        $request->session()->save();
+        // dd($request->session()->get('cart'));*/
+        return redirect("/cart");
+    }
+
+    public function actionProduct(Request $request,$id){
+        echo $id;
+        echo $request->action;
+        echo $request->qty;
+        if ($request->action=="acart"){
+            $this->addNewToCart($request,$id,$request->qty);
+            return redirect("/cart");
+        }else{
+
+        }
+        print_r($request->query('a'));
+    }
+
 
 
     public  function addNewProduct(Request $request)
@@ -170,6 +210,7 @@ class ProductsController extends Controller
             $product->discount= $request->discount;
             $qty=(float)$request->qty;
             $product->qty = $qty;
+            $product->restqty=$qty;
 
 
 

@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('images',200);
             $table->integer('category');
             $table->integer('qty');
+            $table->integer('restqty');
             $table->double('price',15);
             $table->double('discount',15)->default(0);
             $table->string('discription',300);
